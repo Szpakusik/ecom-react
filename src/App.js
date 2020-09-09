@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import ProductContainer from "./components/ProductContainer/ProductContainer"
@@ -16,7 +14,7 @@ function App() {
   var socket = io.connect(path)
 
   socket.on("connect", () => {
-    alert('Connected to local WebSocket!')
+    console.log('Connected to local WebSocket!')
   });
   socket.on("connect_error", data => {
     alert('Connected Error!')
