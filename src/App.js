@@ -8,6 +8,7 @@ import store from "./store/store"
 
 import io from "socket.io-client";
 import path from "../src/utils/path"
+import Footer from './components/Footer/Footer';
 
 function App() {
   
@@ -17,11 +18,9 @@ function App() {
     console.log('Connected to local WebSocket!')
   });
   socket.on("connect_error", data => {
-    alert('Connected Error!')
+    alert('Connect Error!')
   });
-  socket.on("product.decrease", (data) => {
-    console.log(data);
-  })
+  
   socket.on("product.get.all", (data) => {
     console.log(data);
   })
@@ -32,6 +31,7 @@ function App() {
       <div className="App">
         <Header />
         <ProductContainer socket={socket} />
+        <Footer/>
       </div>
     </Provider>
   );

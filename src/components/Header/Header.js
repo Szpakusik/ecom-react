@@ -16,17 +16,14 @@ function Header() {
 
     const toggle = () => setIsOpen(!isOpen);
     return (
-        <div>
+    <div>
         <Navbar color="dark" dark expand="md">
         <NavbarBrand href="/">MEC</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar>
-                <NavItem>
-                    <NavLink href="/components/">Components</NavLink>
-                </NavItem>
             </Nav>
-            <NavbarText>Simple Text</NavbarText>
+            <NavbarText>Mini E-Commerce</NavbarText>
         </Collapse>
         </Navbar>
     </div>
