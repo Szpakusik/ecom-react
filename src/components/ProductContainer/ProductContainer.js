@@ -22,7 +22,7 @@ const ProductContainer = ( { socket } ) => {
   return (
     <Container>
       <Row className="w-100">
-        { products.length > 0 && products.map( (product) => {return <Product product={product} key={product._id} />}) }
+        { products.length > 0 && products.map( (product) => {return <Product product={product} key={product._id} socket={socket} />}) }
       </Row>
     </Container>
   );

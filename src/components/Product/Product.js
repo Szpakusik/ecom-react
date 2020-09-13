@@ -7,14 +7,28 @@ import {
   CardTitle, Button, Col
 } from 'reactstrap';
 
-const Product = ( {product} ) => {
+const Product = ( {product, socket} ) => {
+
+  
+
+  const [stock, setStock] = useState(product.stock)
 
   const [quantity, setQuantity] = useState( 0 );
+
+  socket.on("product.decrease", (data) => {
+
+    if (product.productId === data.payload.productId){
+      setStock(data.payload.stock)
+    }
+  })
   
   const handleSendClick = () => {
     axios.post( path + '/order', {
       productId: product.productId,
       quantity: Number(quantity)
+    }).then( (res) => {
+      console.log(res);
+      setStock(res.data.payload.stock)
     })
     console.log([product.productId, Number(quantity)]);
   }
@@ -25,14 +39,13 @@ const Product = ( {product} ) => {
   return (
     <Col className="col-sm-6 col-md-4 p-4">
       <Card>
-          <CardImg top src="/logo192.png" alt="Card image cap"  />
+          <CardImg top src="/noimg.png" alt="Card image cap"  />
           <CardBody>
             <CardTitle className="font-weight-bold">{product.name.toUpperCase()}</CardTitle>
             <CardText className="font-weight-bold">{product.price/100} zł</CardText>
+            <CardText className="font-weight-bold">Stan magazynowy: {stock}</CardText>
             <InputGroup>
-              <InputGroupAddon addonType="prepend">$</InputGroupAddon>
               <Input onChange={handleAmountChange} placeholder="Amount" min={0} max={100} type="number" step="1" />
-              <InputGroupAddon addonType="append">.00</InputGroupAddon>
             </InputGroup>
             <Button className="mt-3" onClick={handleSendClick}>Zamów!</Button>
           </CardBody>
