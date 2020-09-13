@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Product.scss';
 import path from "../../utils/path"
@@ -9,11 +9,16 @@ import {
 
 const Product = ( {product, socket} ) => {
 
-  
-
   const [stock, setStock] = useState(product.stock)
 
+  const [disabledStatus, setDisabled] = useState("")
+
   const [quantity, setQuantity] = useState( 0 );
+
+  useEffect(() => {
+    if( stock < 1 ) setDisabled("disabled")
+    if( stock > 0 ) setDisabled("")
+  });
 
   socket.on("product.decrease", (data) => {
 
@@ -47,7 +52,7 @@ const Product = ( {product, socket} ) => {
             <InputGroup>
               <Input onChange={handleAmountChange} placeholder="Amount" min={0} max={100} type="number" step="1" />
             </InputGroup>
-            <Button className="mt-3" onClick={handleSendClick}>Zamów!</Button>
+            <Button className="mt-3" disabled={disabledStatus} onClick={handleSendClick}>Zamów!</Button>
           </CardBody>
       </Card>
     </Col>
